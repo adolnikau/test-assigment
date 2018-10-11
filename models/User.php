@@ -2,103 +2,126 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+use \yii\base;
+
+use app\interfaces;
+
+/**
+ * User implementation of interfaces\IUser
+ */
+class User extends base\Model implements interfaces\IUser
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
-
     /**
-     * {@inheritdoc}
-     */
-    public static function findIdentity($id)
-    {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Finds user by username
+     * User ctor
      *
-     * @param string $username
-     * @return static|null
+     * @param string $name
+     * @param string $platform
      */
-    public static function findByUsername($username)
+    public function __construct(string $name, string $platform)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
+        $this->name = $name;
+        $this->platform = $platform;
+        $this->repositories = [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function __toString() : string
+    {
+        $result = "
+            user {$this->name} from {$this->platform}:
+            🔀 {$this->totalForkCount}
+            ★ {$this->totalStarCount}
+            👁️ {$this->totalWatcherCount}
+            <br/>
+        ";
+        foreach ($this->repositories as $repository) {
+            $result .= (string)$repository;
         }
-
-        return null;
+        return $result;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getId()
+    public function getName() : string
     {
-        return $this->id;
+        return $this->name;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getAuthKey()
+    public function getPlatform() : string
     {
-        return $this->authKey;
+        return $this->platform;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function validateAuthKey($authKey)
+    public function getTotalForkCount() : int
     {
-        return $this->authKey === $authKey;
+        $total = 0;
+        foreach ($this->repositories as $repository) {
+            $total += $repository->getForkCount();
+        }
+        return $total;
     }
 
     /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
+     * @inheritDoc
      */
-    public function validatePassword($password)
+    public function getTotalStarCount() : int
     {
-        return $this->password === $password;
+        $total = 0;
+        foreach ($this->repositories as $repository) {
+            $total += $repository->getStarCount();
+        }
+        return $total;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTotalWatcherCount() : int
+    {
+        $total = 0;
+        foreach ($this->repositories as $repository) {
+            $total += $repository->getWatcherCount();
+        }
+        return $total;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addRepo(string $name, interfaces\IRepo $repo)
+    {
+        $this->repositories[$name] = $repo;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delRepo(string $name)
+    {
+        unset($this->repositories);
+    }
+
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $platform;
+
+    /**
+     * @var interfaces\Repo[]
+     */
+    private $repositories;
 }
