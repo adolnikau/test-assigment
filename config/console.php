@@ -25,13 +25,11 @@ $config = [
         ],
     ],
     'params' => $params,
-    /*
-    'controllerMap' => [
-        'fixture' => [ // Fixture generation command line.
-            'class' => 'yii\faker\FixtureController',
-        ],
-    ],
- */
+    'github' => ['class' => 'app\components\platforms\Github'],
+    'gitlab' => ['class' => 'app\components\platforms\Gitlab'],
+    'bitbucket' => ['class' => 'app\components\platforms\Bitbucket'],
+    'searcher' => ['class' => 'app\components\Searcher'],
+    'factory' => ['class' => 'app\components\Factory']
 ];
 
 if (YII_ENV_DEV) {

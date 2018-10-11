@@ -8,6 +8,13 @@ namespace app\interfaces;
 interface IUser
 {
     /**
+     * Return identifier of user
+     *
+     * @return string
+     */
+    public function getIdentifier() : string;
+
+    /**
      * Return name of user
      *
      * @return string
@@ -22,40 +29,17 @@ interface IUser
     public function getPlatform() : string;
 
     /**
-     * Return total fork count of user repos
+     * Return total rating of user
      *
-     * @return int
+     * @return float
      */
-    public function getTotalForkCount() : int;
-
-    /**
-     * Return total star count of user repos
-     *
-     * @return int
-     */
-    public function getTotalStarCount() : int;
-
-    /**
-     * Return total watcher count of user repos
-     *
-     * @return int
-     */
-    public function getTotalWatcherCount() : int;
+    public function getTotalRating() : float;
 
     /**
      * Add repo to user
      *
-     * @param string $name
-     * @param Repo $repo
+     * @param IRepo[] $repos
      * @return void
      */
-    public function addRepo(string $name, IRepo $repo);
-
-    /**
-     * Del repo to user
-     *
-     * @param string $name
-     * @return void
-     */
-    public function delRepo(string $name);
+    public function addRepos(array $repos);
 }

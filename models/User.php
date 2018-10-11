@@ -3,6 +3,7 @@
 namespace app\models;
 
 use \yii\base;
+use yii\helpers\Html;
 
 use app\interfaces;
 
@@ -14,11 +15,13 @@ class User extends base\Model implements interfaces\IUser
     /**
      * User ctor
      *
+     * @param string $identifier
      * @param string $name
      * @param string $platform
      */
-    public function __construct(string $name, string $platform)
+    public function __construct(string $identifier, string $name, string $platform)
     {
+        $this->identifier = $identifier;
         $this->name = $name;
         $this->platform = $platform;
         $this->repositories = [];
@@ -29,17 +32,24 @@ class User extends base\Model implements interfaces\IUser
      */
     public function __toString() : string
     {
-        $result = "
-            user {$this->name} from {$this->platform}:
-            🔀 {$this->totalForkCount}
-            ★ {$this->totalStarCount}
-            👁️ {$this->totalWatcherCount}
-            <br/>
-        ";
+        $result = sprintf(
+            "%-50s %4d 🏆\n%'=48s\n",
+            $this->fullName,
+            $this->totalRating,
+            ""
+        );
         foreach ($this->repositories as $repository) {
-            $result .= (string)$repository;
+            $result .= (string)$repository . "\n";
         }
         return $result;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getIdentifier() : string
+    {
+        return $this->identifier;
     }
 
     /**
@@ -61,54 +71,41 @@ class User extends base\Model implements interfaces\IUser
     /**
      * @inheritDoc
      */
-    public function getTotalForkCount() : int
+    public function getFullName() : string
     {
-        $total = 0;
+        return "{$this->name} ({$this->platform})";
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTotalRating() : float
+    {
+        $rating = 0.0;
         foreach ($this->repositories as $repository) {
-            $total += $repository->getForkCount();
+            $rating += $repository->getRating();
         }
-        return $total;
+        return $rating;
     }
 
     /**
-     * @inheritDoc
+     * Add repo to user
+     *
+     * @param interfaces\IRepo[] $repos
+     * @return void
      */
-    public function getTotalStarCount() : int
+    public function addRepos(array $repos)
     {
-        $total = 0;
-        foreach ($this->repositories as $repository) {
-            $total += $repository->getStarCount();
-        }
-        return $total;
+        $this->repositories = array_merge($this->repositories, $repos);
+        usort($this->repositories, function ($repo1, $repo2) {
+            return $repo2->getRating() - $repo1->getRating();
+        });
     }
 
     /**
-     * @inheritDoc
+     * @var string
      */
-    public function getTotalWatcherCount() : int
-    {
-        $total = 0;
-        foreach ($this->repositories as $repository) {
-            $total += $repository->getWatcherCount();
-        }
-        return $total;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function addRepo(string $name, interfaces\IRepo $repo)
-    {
-        $this->repositories[$name] = $repo;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function delRepo(string $name)
-    {
-        unset($this->repositories);
-    }
+    private $identifier;
 
     /**
      * @var string

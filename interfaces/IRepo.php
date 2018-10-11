@@ -35,4 +35,11 @@ interface IRepo
      */
     public function getWatcherCount() : int;
 
+    /**
+     * Return repo rating
+     *
+     * @return float
+     */
+    public function getRating() : float;
+
 }

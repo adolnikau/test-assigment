@@ -26,13 +26,12 @@ return [
         'request' => [
             'cookieValidationKey' => 'test',
             'enableCsrfValidation' => false,
-            // but if you absolutely need it set cookie domain to localhost
-            /*
-            'csrfCookie' => [
-                'domain' => 'localhost',
-            ],
-         */
         ],
+        'github' => ['class' => 'app\components\platforms\Github'],
+        'gitlab' => ['class' => 'app\components\platforms\Gitlab'],
+        'bitbucket' => ['class' => 'app\components\platforms\Bitbucket'],
+        'searcher' => ['class' => 'app\components\Searcher'],
+        'factory' => ['class' => 'app\components\Factory']
     ],
     'params' => $params,
 ];

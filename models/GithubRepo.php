@@ -7,12 +7,12 @@ use \yii\base;
 use app\interfaces;
 
 /**
- * Repo implementation of interfaces\Repo
+ * GithubRepo implementation of interfaces\Repo
  */
-class Repo extends base\Model implements interfaces\IRepo
+class GithubRepo extends base\Model implements interfaces\IRepo
 {
     /**
-     * Repo ctor
+     * GithubRepo ctor
      *
      * @param string $name
      * @param int $forkCount
@@ -32,13 +32,13 @@ class Repo extends base\Model implements interfaces\IRepo
      */
     public function __toString() : string
     {
-        return "
-            repo {$this->name}:
-            🔀 {$this->forkCount}
-            ★ {$this->startCount}
-            👁️ {$this->watcherCount}
-            <br/>
-        ";
+        return sprintf(
+            "%-25s %4d ⇅ %4d ★ %4d 👁️",
+            $this->name,
+            $this->forkCount,
+            $this->startCount,
+            $this->watcherCount
+        );
     }
 
     /**
@@ -71,6 +71,16 @@ class Repo extends base\Model implements interfaces\IRepo
     public function getWatcherCount() : int
     {
         return $this->watcherCount;
+    }
+
+    /**
+     * Return repo rating
+     *
+     * @return float
+     */
+    public function getRating() : float
+    {
+        return (($this->forkCount * 2.0) + ($this->startCount / 2.0) + $this->watcherCount) / 3.0;
     }
 
     /**
