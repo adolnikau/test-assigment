@@ -36,10 +36,18 @@ interface IUser
     public function getTotalRating() : float;
 
     /**
+     * Return all user data in array representation
+     *
+     * @return array
+     */
+    public function getData() : array;
+
+    /**
      * Add repo to user
      *
      * @param IRepo[] $repos
      * @return void
+     * @throws LogicException
      */
     public function addRepos(array $repos);
 }

@@ -42,4 +42,11 @@ interface IRepo
      */
     public function getRating() : float;
 
+    /**
+     * Return all repo data in array representation
+     *
+     * @return array
+     */
+    public function getData() : array;
+
 }

@@ -15,21 +15,14 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'log' => [
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'showScriptName' => false,
+            'enablePrettyUrl' => true,
+            'rules' => [],
         ],
     ],
     'params' => $params,
-    'github' => ['class' => 'app\components\platforms\Github'],
-    'gitlab' => ['class' => 'app\components\platforms\Gitlab'],
-    'bitbucket' => ['class' => 'app\components\platforms\Bitbucket'],
-    'searcher' => ['class' => 'app\components\Searcher'],
-    'factory' => ['class' => 'app\components\Factory']
 ];
 
 if (YII_ENV_DEV) {

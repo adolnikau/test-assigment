@@ -3,7 +3,7 @@
 namespace app\interfaces;
 
 /**
- * Represent interface decorator for searching via all platforms
+ * Represent interface decorator for searching via several platforms
  */
 interface ISearcher
 {

@@ -20,12 +20,15 @@ return [
         'urlManager' => [
             'showScriptName' => true,
         ],
-        'user' => [
-            'identityClass' => 'app\models\User',
-        ],
         'request' => [
             'cookieValidationKey' => 'test',
             'enableCsrfValidation' => false,
+        ],
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'showScriptName' => false,
+            'enablePrettyUrl' => true,
+            'rules' => [],
         ],
         'github' => ['class' => 'app\components\platforms\Github'],
         'gitlab' => ['class' => 'app\components\platforms\Gitlab'],

@@ -12,6 +12,7 @@ interface IFactory
      *
      * @param string $name
      * @return IPlatform
+     * @throws LogicException
      */
     public function create(string $name) : IPlatform;
 }

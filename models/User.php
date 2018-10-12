@@ -89,15 +89,34 @@ class User extends base\Model implements interfaces\IUser
     }
 
     /**
-     * Add repo to user
-     *
-     * @param interfaces\IRepo[] $repos
-     * @return void
+     * @inheritDoc
+     */
+    public function getData() : array
+    {
+        $data = [
+            'name' => $this->name,
+            'platform' => $this->platform,
+            'total-rating' => $this->totalRating,
+            'repos' => [],
+        ];
+        foreach ($this->repositories as $repository) {
+            $data['repo'][] = $repository->getData();
+        }
+        return $data;
+    }
+
+    /**
+     * @inheritDoc
      */
     public function addRepos(array $repos)
     {
         $this->repositories = array_merge($this->repositories, $repos);
         usort($this->repositories, function ($repo1, $repo2) {
+            if (!($repo1 instanceof interfaces\IRepo) ||
+                !($repo2 instanceof interfaces\IRepo)) {
+                throw new \LogicException();
+            }
+
             return $repo2->getRating() - $repo1->getRating();
         });
     }
