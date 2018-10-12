@@ -10,15 +10,20 @@ use app\models;
 
 /**
  * Github implementation of interfaces\IPlatform
+ * 
+ * @see https://github.com/KnpLabs/php-github-api/
  */
 class Github extends base\Component implements interfaces\IPlatform
 {
     /**
      * Github platform ctor
+     *
+     * @param mixed $config
      */
-    public function __construct()
+    public function __construct($config)
     {
         $this->client = new Client();
+        parent::__construct($config);
     }
 
     /**

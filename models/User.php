@@ -33,7 +33,7 @@ class User extends base\Model implements interfaces\IUser
     public function __toString() : string
     {
         $result = sprintf(
-            "%-50s %4d 🏆\n%'=48s\n",
+            "%-75s %19d 🏆\n%'=98s\n",
             $this->fullName,
             $this->totalRating,
             ""

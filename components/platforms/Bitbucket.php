@@ -10,15 +10,20 @@ use app\models;
 
 /**
  * Bitbucket implementation of interfaces\IPlatform
+ * 
+ * @see https://bitbucket.org/gentlero/bitbucket-api/src/
  */
 class Bitbucket extends base\Component implements interfaces\IPlatform
 {
     /**
      * Bitbucket platform ctor
+     * 
+     * @param mixed $config
      */
-    public function __construct()
+    public function __construct($config)
     {
         $this->api = new Api\Users();
+        parent::__construct($config);
     }
 
     /**
@@ -47,17 +52,22 @@ class Bitbucket extends base\Component implements interfaces\IPlatform
     public function findUserRepos(string $user) : array
     {
         /**
-         * @see https://github.com/KnpLabs/php-github-api/blob/master/doc/repos.md#get-the-repositories-of-a-specific-user
+         * @see https://bitbucket.org/gentlero/bitbucket-api/src/8aa84ffbe0846da6a05fc89cdfbc159c622e9a4e/lib/Bitbucket/API/Users.php?at=develop&fileviewer=file-view-default#lines-73
          */
         $result = [];
-        $response = $this->api->repositories($user);
-        $response = json_decode($response->getContent(), true);
-        foreach ($response['values'] as $repo) {
-            $result[] = new models\BitbucketRepo(
-                $repo['name'],
-                count($repo['links']['forks']),
-                count($repo['links']['watchers'])
-            );
+        for ($i = 1;; ++$i) {
+            $response = $this->api->repositories("$user?page=$i");
+            $response = json_decode($response->getContent(), true);
+            if (!count($response['values'])) {
+                break;
+            }
+            foreach ($response['values'] as $repo) {
+                $result[] = new models\BitbucketRepo(
+                    $repo['name'],
+                    count($repo['links']['forks']),
+                    count($repo['links']['watchers'])
+                );
+            }
         }
         return $result;
     }

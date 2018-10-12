@@ -31,7 +31,7 @@ class BitbucketRepo extends base\Model implements interfaces\IRepo
     public function __toString() : string
     {
         return sprintf(
-            "%-25s %4d ⇅ %6s %4d 👁️",
+            "%-75s %4d ⇅ %6s %4d 👁️",
             $this->name,
             $this->forkCount,
             "",

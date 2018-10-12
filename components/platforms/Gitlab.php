@@ -11,15 +11,20 @@ use app\models;
 
 /**
  * Gitlab implementation of interfaces\IPlatform
+ * 
+ * @see https://github.com/m4tthumphrey/php-gitlab-api/
  */
 class Gitlab extends base\Component implements interfaces\IPlatform
 {
     /**
-     * Gitlab platform ctor
+     * Gitlab platform 
+     * 
+     * @param mixed $config
      */
-    public function __construct()
+    public function __construct($config)
     {
         $this->api = new api\GitlabUsers(Client::create('https://gitlab.com'));
+        parent::__construct($config);
     }
 
     /**

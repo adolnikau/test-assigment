@@ -5,14 +5,14 @@ namespace tests;
 use app\models;
 
 /**
- * GithuRepoTest contains test casess for github repo model
+ * GitlabRepoTest contains test casess for gitlab repo model
  * 
  * IMPORTANT NOTE:
  * All test cases down below must be implemented
  * You can add new test cases on your own
  * If they could be helpful in any form
  */
-class GithuRepoTest extends \Codeception\Test\Unit
+class GitlabRepoTest extends \Codeception\Test\Unit
 {
     /**
      * Test case for counting repo rating

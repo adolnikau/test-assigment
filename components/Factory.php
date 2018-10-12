@@ -27,15 +27,15 @@ class Factory extends base\Component implements interfaces\IFactory
 
         switch ($name) {
             case self::PLATFORM_GITHUB:
-                $platform = new platforms\Github();
+                $platform = new platforms\Github([]);
                 break;
 
             case self::PLATFORM_GITLAB:
-                $platform = new platforms\Gitlab();
+                $platform = new platforms\Gitlab([]);
                 break;
 
             case self::PLATFORM_BITBUCKET:
-                $platform = new platforms\Bitbucket();
+                $platform = new platforms\Bitbucket([]);
                 break;
 
             default:
