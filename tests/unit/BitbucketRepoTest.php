@@ -6,7 +6,7 @@ use app\models;
 
 /**
  * BitbucketRepoTest contains test casess for bitbucket repo model
- * 
+ *
  * IMPORTANT NOTE:
  * All test cases down below must be implemented
  * You can add new test cases on your own
@@ -21,9 +21,9 @@ class BitbucketRepoTest extends \Codeception\Test\Unit
      */
     public function testRatingCount()
     {
-        /**
-         * @todo IMPLEMENT THIS
-         */
+        $bitbucketRepo = new models\BitbucketRepo('test', 2, 3);
+        $actualResult = $bitbucketRepo->getRating();
+        $this->assertEquals(3.5, $actualResult);
     }
 
     /**
@@ -33,9 +33,16 @@ class BitbucketRepoTest extends \Codeception\Test\Unit
      */
     public function testData()
     {
-        /**
-         * @todo IMPLEMENT THIS
-         */
+        $bitbucketRepo = new models\BitbucketRepo('test', 2, 3);
+        $actualResult = $bitbucketRepo->getData();
+        $expectedResult = [
+            'name' => 'test',
+            'fork-count' => 2,
+            'watcher-count' => 3,
+            'start-count' => $this->startCount,
+            'rating' => 3.5
+        ];
+        $this->assertTrue(!array_diff($actualResult, $expectedResult), 'data are equals');
     }
 
     /**
@@ -45,8 +52,14 @@ class BitbucketRepoTest extends \Codeception\Test\Unit
      */
     public function testStringify()
     {
-        /**
-         * @todo IMPLEMENT THIS
-         */
+        $bitbucketRepo = new models\BitbucketRepo('test', 2, 3);
+
+        $expected = sprintf(
+            "%-75s %4d ⇅ %6s %4d 👁️",
+            'test',
+            2,
+            "",
+            3);
+        $this->assertEquals($expected, (string)$bitbucketRepo); //XD test testing )
     }
 }

@@ -3,6 +3,7 @@
 namespace tests;
 
 use app\components;
+use app\components\platforms\Gitlab;
 
 /**
  * FactoryTest contains test casess for factory component
@@ -24,8 +25,7 @@ class FactoryTest extends \Codeception\Test\Unit
      */
     public function testCreate()
     {
-        /**
-         * @todo IMPLEMENT THIS
-         */
+        $actualPlatform = \Yii::$app->factory->create('gitlab');
+        $this->assertTrue($actualPlatform instanceof Gitlab);
     }
 }

@@ -21,9 +21,9 @@ class GithubRepoTest extends \Codeception\Test\Unit
      */
     public function testRatingCount()
     {
-        /**
-         * @todo IMPLEMENT THIS
-         */
+        $githubRepo = new models\GithubRepo('test', 2,3,4);
+        $actualResult = $githubRepo->getRating();
+        $this->assertEquals(3.1666666666667, $actualResult);
     }
 
     /**
@@ -33,9 +33,16 @@ class GithubRepoTest extends \Codeception\Test\Unit
      */
     public function testData()
     {
-        /**
-         * @todo IMPLEMENT THIS
-         */
+        $githubRepo = new models\GithubRepo('test', 2,3,4);
+        $actualResult = $githubRepo->getData();
+        $expectedResult = [
+            'name' => 'test',
+            'fork-count' => 2,
+            'start-count' => 3,
+            'watcher-count' => 4,
+            'rating' => 3.1666666666667
+        ];
+        $this->assertTrue(!array_diff($actualResult, $expectedResult), 'data are equals');
     }
 
     /**
@@ -45,8 +52,14 @@ class GithubRepoTest extends \Codeception\Test\Unit
      */
     public function testStringify()
     {
-        /**
-         * @todo IMPLEMENT THIS
-         */
+        $githubRepo = new models\GithubRepo('test', 2,3,4);
+        $expected = sprintf(
+            "%-75s %4d ⇅ %4d ★ %4d 👁️",
+            'test',
+            2,
+            3,
+            4
+        );
+        $this->assertEquals($expected, (string)$githubRepo); //XD test testing )
     }
 }
