@@ -14,6 +14,7 @@ use app\models;
  */
 class BitbucketRepoTest extends \Codeception\Test\Unit
 {
+    // +
     /**
      * Test case for counting repo rating
      *
@@ -26,6 +27,7 @@ class BitbucketRepoTest extends \Codeception\Test\Unit
         $this->assertEquals(3.5, $actualResult);
     }
 
+    // - no variable startCount in the code
     /**
      * Test case for repo model data serialization
      *
@@ -45,6 +47,7 @@ class BitbucketRepoTest extends \Codeception\Test\Unit
         $this->assertTrue(!array_diff($actualResult, $expectedResult), 'data are equals');
     }
 
+    // +
     /**
      * Test case for repo model __toString verification
      *

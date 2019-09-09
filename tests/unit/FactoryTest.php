@@ -15,6 +15,7 @@ use app\components\platforms\Gitlab;
  */
 class FactoryTest extends \Codeception\Test\Unit
 {
+    // - low coverage
     /**
      * Test case for creating platform component
      * 

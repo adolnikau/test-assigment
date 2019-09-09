@@ -70,6 +70,7 @@ class BaseCest
         $I->assertEquals($expected, json_decode($I->grabPageSource()));
     }
 
+    // +
     /**
      * Test case for api with bad request params
      *
@@ -93,6 +94,7 @@ class BaseCest
         $I->assertEquals($expected, $I->grabPageSource());
     }
 
+    // +
     /**
      * Test case for api with empty user list
      *
@@ -114,6 +116,7 @@ class BaseCest
         $I->assertEquals($expected, $I->grabPageSource());
     }
 
+    // +
     /**
      * Test case for api with empty platform list
      *
@@ -135,6 +138,7 @@ class BaseCest
         $I->assertEquals($expected, $I->grabPageSource());
     }
 
+    // +
     /**
      * Test case for api with non empty platform list
      *
@@ -195,6 +199,7 @@ class BaseCest
         $I->assertEquals($expected, json_decode($I->grabPageSource()));
     }
 
+    // +
     /**
      * Test case for api with non empty user list
      *
@@ -479,6 +484,7 @@ class BaseCest
         $I->assertEquals($expected, json_decode($I->grabPageSource()));
     }
 
+    // see fix below
     /**
      * Test case for api with unknown platform in list
      *
@@ -488,19 +494,7 @@ class BaseCest
     {
 
         //didnt work, dont now why
-//        $I->expectThrowable(new \LogicException(), function() {
-//            $this->amOnPage([
-//                'base/api',
-//                'users' => [
-//                    'kfr'
-//                ],
-//                'platforms' => [
-//                    'exampleAnotherRepo'
-//                ]
-//            ]);
-//        });
-
-        try {
+        $I->expectThrowable(new \LogicException(), function() use ($I) {
             $I->amOnPage([
                 'base/api',
                 'users' => [
@@ -510,13 +504,26 @@ class BaseCest
                     'exampleAnotherRepo'
                 ]
             ]);
-        } catch (Exception $e) {
-            codecept_debug(get_class($e));
-            $I->assertTrue(get_class($e) == 'LogicException', 'exception class LogicException');
-        }
+        });
+
+//        try {
+//            $I->amOnPage([
+//                'base/api',
+//                'users' => [
+//                    'kfr'
+//                ],
+//                'platforms' => [
+//                    'exampleAnotherRepo'
+//                ]
+//            ]);
+//        } catch (Exception $e) {
+//            codecept_debug(get_class($e));
+//            $I->assertTrue(get_class($e) == 'LogicException', 'exception class LogicException');
+//        }
 
     }
 
+    // +
     /**
      * Test case for api with unknown user in list
      *
@@ -540,6 +547,7 @@ class BaseCest
         $I->assertEquals($expected, json_decode($I->grabPageSource()));
     }
 
+    // +
     /**
      * Test case for api with mixed (unknown, real) users and non empty platform list
      *
@@ -601,6 +609,7 @@ class BaseCest
         $I->assertEquals($expected, json_decode($I->grabPageSource()));
     }
 
+    // mixed should mix known and unknown platforms. For multiple platforms there is cestSeveralPlatforms test
     /**
      * Test case for api with mixed (github, gitlab, bitbucket) platforms and non empty user list
      *

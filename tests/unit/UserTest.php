@@ -14,6 +14,7 @@ use app\models;
  */
 class UserTest extends \Codeception\Test\Unit
 {
+    // +- no test for sorting
     /**
      * Test case for adding repo models to user model
      *
@@ -38,6 +39,9 @@ class UserTest extends \Codeception\Test\Unit
         $this->assertTrue(!array_diff($user->getData()['repo'][0], $expected), 'user has adding repos');
     }
 
+    // - no test for exception
+
+    // +
     /**
      * Test case for counting total user rating
      *
@@ -54,6 +58,7 @@ class UserTest extends \Codeception\Test\Unit
         $this->assertEquals($expected, $actual, 'total rating is right');
     }
 
+    // - no test for repo in the array
     /**
      * Test case for user model data serialization
      *
@@ -72,6 +77,7 @@ class UserTest extends \Codeception\Test\Unit
         $this->assertTrue(!array_diff($expected, $actual), 'user has expected data');
     }
 
+    // -
     /**
      * Test case for user model __toString verification
      *

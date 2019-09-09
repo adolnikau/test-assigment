@@ -14,6 +14,7 @@ use app\models;
  */
 class GitlabRepoTest extends \Codeception\Test\Unit
 {
+    // +
     /**
      * Test case for counting repo rating
      *
@@ -26,6 +27,7 @@ class GitlabRepoTest extends \Codeception\Test\Unit
         $this->assertEquals(3.75, $actualResult);
     }
 
+    // -
     /**
      * Test case for repo model data serialization
      *
@@ -44,6 +46,7 @@ class GitlabRepoTest extends \Codeception\Test\Unit
         $this->assertTrue(!array_diff($actualResult, $expectedResult), 'data are equals');
     }
 
+    // +
     /**
      * Test case for repo model __toString verification
      *

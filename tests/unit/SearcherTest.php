@@ -24,6 +24,10 @@ class SearcherTest extends \Codeception\Test\Unit
      *
      * @return void
      */
+
+    // -
+    // Idiomatically unit test shouldn't use any external resources e.g.: disk, net, etc.
+    // External dependency should be mocked with test data
     public function testSearcher()
     {
         $users = ['kfr', 'frog'];
@@ -35,6 +39,7 @@ class SearcherTest extends \Codeception\Test\Unit
         }
     }
 
+    // +
     public function testSearcherWithEmptyUsers()
     {
         $users = [];
